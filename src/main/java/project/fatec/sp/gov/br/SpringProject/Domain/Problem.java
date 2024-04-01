@@ -26,7 +26,7 @@ public class Problem {
     @Column(name = "ProblemName")
     private String problemName;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "codeProblem", nullable = false, unique = true)
     private String codeProblem;
 
     @Column(name = "output")
