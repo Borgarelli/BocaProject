@@ -23,13 +23,13 @@ public class Problem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idProblem;
 
-    @Column(name = "ProblemName")
+    @Column(name = "problemName")
     private String problemName;
 
     @Column(name = "codeProblem", nullable = false, unique = true)
     private String codeProblem;
 
-    @Column(name = "output")
+    @Column(name = "output", nullable = false)
     private Boolean result;
 
 }

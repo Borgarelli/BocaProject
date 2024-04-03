@@ -28,4 +28,5 @@ public class CaseTests {
 
     @Column(name = "code", nullable = false)
     private String code;
+
 }
