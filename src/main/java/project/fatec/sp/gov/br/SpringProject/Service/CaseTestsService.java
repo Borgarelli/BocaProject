@@ -1,6 +1,7 @@
 package project.fatec.sp.gov.br.SpringProject.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,11 +16,19 @@ public class CaseTestsService {
 
     @Autowired
     private CaseTestsRepository repository;
+
+    public CaseTests findById(Long caseTestId) {
+        Optional<CaseTests> found = repository.findById(caseTestId);
+        if (found.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return found.get();
+    }
     
     public List<CaseTests> findByProblem(Long problemId) {
         List<CaseTests> results = repository.findByIdProblem(problemId);
         if(results.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "not found"); 
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND); 
         }
         return results;
     }
@@ -35,5 +44,8 @@ public class CaseTestsService {
         return repository.save(caseTest);
     }
 
-    
+    public void deleteCaseTest(Long caseTestId) {
+        repository.deleteById(caseTestId);
+    }
+
 }
