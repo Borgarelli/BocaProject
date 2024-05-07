@@ -18,7 +18,7 @@ public class CaseTests {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idCaseTest;
 
-    @Column(name = "result", nullable = false)
+    @Column(name = "result")
     private Boolean result;
 
     @Column(name = "code", nullable = false)
