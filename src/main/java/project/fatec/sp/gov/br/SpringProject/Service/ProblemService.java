@@ -35,9 +35,9 @@ public class ProblemService {
         return found.get();
     }
 
-    public List<Problem> findAll() {
+    public List<Problem> findAllProblems() {
         return repository.findAll();
     }
 
-    
+
 }
