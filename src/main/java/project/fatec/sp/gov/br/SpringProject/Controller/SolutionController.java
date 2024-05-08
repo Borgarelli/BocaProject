@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,7 +12,6 @@ import project.fatec.sp.gov.br.SpringProject.Domain.Solution;
 import project.fatec.sp.gov.br.SpringProject.Service.SolutionService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -44,8 +44,12 @@ public class SolutionController {
     }
     
     @GetMapping("/{problemCode}")
-    public List<Solution> getMethodName(@PathVariable("problemCode") String problemCode) {
+    public List<Solution> getByProblemCode(@PathVariable("problemCode") String problemCode) {
         return service.findByProblemCode(problemCode);
     }
     
+    @DeleteMapping("/{id}/delete")
+    public void deleteSolution(@PathVariable("id") Long id) {
+        service.deleteSolution(id);
+    }
 }
