@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
-@RequestMapping("/caseTests")
+@RequestMapping("/caseTest")
 @CrossOrigin
 public class CaseTestsController {
 
@@ -34,7 +34,7 @@ public class CaseTestsController {
     }
     
     @PostMapping
-    public CaseTests postMethodName(@RequestBody CaseTests caseTest) {
+    public CaseTests createCaseTest(@RequestBody CaseTests caseTest) {
         return service.createCaseTest(caseTest);
     }
     
