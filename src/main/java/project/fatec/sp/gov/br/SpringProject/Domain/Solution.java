@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import project.fatec.sp.gov.br.SpringProject.Enum.Status;
 
 @Getter
 @Setter
@@ -30,6 +31,12 @@ public class Solution {
 
     @Column(name = "file_name", nullable = false)
     private String fileName;
+
+    @Column(name = "status")
+    private Status status;
+
+    @Column(name = "problem_code")
+    private String problemCode;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
