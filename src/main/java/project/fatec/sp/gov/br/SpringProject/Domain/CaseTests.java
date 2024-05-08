@@ -16,6 +16,7 @@ public class CaseTests {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "case_test_id")
     private long idCaseTest;
 
     @Column(name = "result")
@@ -26,6 +27,6 @@ public class CaseTests {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn( name = "problem_id")
-    private Problema problem;
+    private Problems problem;
 
 }

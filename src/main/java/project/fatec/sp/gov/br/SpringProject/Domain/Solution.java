@@ -22,12 +22,13 @@ public class Solution {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "solution_id")
     private Long id_solution;
 
-    @Column(name = "authorName", nullable = false)
+    @Column(name = "author_name", nullable = false)
     private String authorName;
 
-    @Column(name = "fileName", nullable = false)
+    @Column(name = "file_name", nullable = false)
     private String fileName;
 
     @Column(name = "created_at", nullable = false)

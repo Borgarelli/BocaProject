@@ -38,4 +38,8 @@ public class ProblemsService {
         return repository.findAll();
     }
 
+    public void deleteProblem (Long id) {
+        repository.deleteById(id);
+    }
+
 }
