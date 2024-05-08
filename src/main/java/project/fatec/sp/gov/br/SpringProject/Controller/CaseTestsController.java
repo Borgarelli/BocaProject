@@ -34,7 +34,7 @@ public class CaseTestsController {
     }
     
     @PostMapping
-    public CaseTests postMethodName(@RequestBody CaseTests caseTest) {
+    public CaseTests createCaseTest(@RequestBody CaseTests caseTest) {
         return service.createCaseTest(caseTest);
     }
     

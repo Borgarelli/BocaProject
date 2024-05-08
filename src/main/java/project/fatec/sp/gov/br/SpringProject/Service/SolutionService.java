@@ -36,5 +36,23 @@ public class SolutionService {
         return repository.findAll();
     }
 
+    public void deleteSolution(Long id) {
+        repository.deleteById(id);
+    }
+
+    public List<Solution> findByStatus() {
+        List<Solution> found = repository.findByStatus();
+        if(found.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return found;
+    }
      
+    public List<Solution> findByProblemCode(String problemCode) {
+        List<Solution> found = repository.findByProblemCodeOrderByCreatedAt(problemCode);
+        if(found.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return found;
+    }
 }
