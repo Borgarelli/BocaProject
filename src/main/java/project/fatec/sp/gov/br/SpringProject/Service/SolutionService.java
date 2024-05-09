@@ -18,9 +18,16 @@ public class SolutionService {
     private SolutionRepository repository;
 
     public Solution createSolution(Solution solution) {
+        String fileType = ".py";
+
         if(solution == null || solution.getFileName().isBlank()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
+
+        if(!solution.getFileName().contains(fileType)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Send a python file only!");
+        }
+
         return repository.save(solution);
     }
 
