@@ -48,12 +48,4 @@ public class CaseTestsService {
         repository.deleteById(caseTestId);
     }
 
-    public List<CaseTests> findListByProblemId(Long problemId) {
-        List<CaseTests> found = repository.findByIdProblem(problemId);
-        if(found.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return found;
-    }
-
 }
