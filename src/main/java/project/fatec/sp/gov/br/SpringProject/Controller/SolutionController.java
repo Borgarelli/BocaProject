@@ -38,10 +38,10 @@ public class SolutionController {
         return service.createSolution(solution);
     }
     
-    @GetMapping("/fail")
-    public List<Solution> getByStatus() {
-        return service.findByStatus();
-    }
+    // @GetMapping("/fail")
+    // public List<Solution> getByStatus() {
+    //     return service.findByStatus();
+    // }
     
     @GetMapping("/{problemCode}")
     public List<Solution> getByProblemCode(@PathVariable("problemCode") String problemCode) {
