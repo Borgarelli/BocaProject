@@ -1,5 +1,7 @@
 package project.fatec.sp.gov.br.SpringProject.Domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,6 +30,7 @@ public class CaseTests {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn( name = "problem_id")
+    @JsonIgnore
     private Problems problem;
 
 }
