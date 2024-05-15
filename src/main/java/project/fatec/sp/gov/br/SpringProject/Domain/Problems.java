@@ -30,7 +30,7 @@ public class Problems {
     @Column(name = "output", nullable = false)
     private Boolean result;
 
-    @OneToMany(mappedBy = "caseTests", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<CaseTests> caseTests;
+    // @OneToMany(mappedBy = "caseTests", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    // private List<CaseTests> caseTests;
 
 }

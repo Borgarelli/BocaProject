@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS problems (
     output INTEGER NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS caseTests (
+CREATE TABLE IF NOT EXISTS case_Test (
     case_test_id INTEGER PRIMARY KEY auto_increment,
     result INTEGER,
     code TEXT NOT NULL,
