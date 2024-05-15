@@ -9,13 +9,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import project.fatec.sp.gov.br.SpringProject.Domain.CaseTests;
+import project.fatec.sp.gov.br.SpringProject.Domain.Problems;
 import project.fatec.sp.gov.br.SpringProject.Repository.CaseTestsRepository;
+import project.fatec.sp.gov.br.SpringProject.Repository.ProblemsRepository;
 
 @Service
 public class CaseTestsService {
 
     @Autowired
     private CaseTestsRepository repository;
+
+    @Autowired
+    private ProblemsRepository problemsRepository;
 
     public CaseTests findById(Long caseTestId) {
         Optional<CaseTests> found = repository.findById(caseTestId);
@@ -37,11 +42,22 @@ public class CaseTestsService {
         return repository.findAll();
     }
 
-    public CaseTests createCaseTest(CaseTests caseTest) {
+    public CaseTests createCaseTest(Long problemId, CaseTests caseTest) {
+
+        Optional<Problems> found = problemsRepository.findById(problemId);
+
         if (caseTest == null || caseTest.getCode().isBlank()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        return repository.save(caseTest);
+
+        if(found.isPresent()) {
+            Problems founded = found.get();
+            caseTest.setProblem(founded);
+            return repository.save(caseTest);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Problem not found");
+        }
+        
     }
 
     public void deleteCaseTest(Long caseTestId) {

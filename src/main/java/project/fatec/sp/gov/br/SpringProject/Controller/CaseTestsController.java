@@ -34,8 +34,8 @@ public class CaseTestsController {
     }
     
     @PostMapping
-    public CaseTests createCaseTest(@RequestBody CaseTests caseTest) {
-        return service.createCaseTest(caseTest);
+    public CaseTests createCaseTest(@PathVariable Long problemId ,@RequestBody CaseTests caseTest) {
+        return service.createCaseTest(problemId, caseTest);
     }
     
     @GetMapping("/{problemId}/problem")
