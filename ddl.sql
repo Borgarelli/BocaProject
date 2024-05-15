@@ -47,7 +47,9 @@ VALUES (
 INSERT INTO test (result, code, problem_id) 
 VALUES (
     0, 
-    'def voluntarios_perdidos(N, R, retornados): todos = set(range(1, N+1)); retornados = set(retornados); perdidos = sorted([v for v in todos if v not in retornados]); return " ".join(map(str, perdidos)) if perdidos else "*"',
+    'def voluntarios_perdidos(N, R, retornados): todos = set(range(1, N+1));' ||
+    ' retornados = set(retornados); perdidos = sorted([v for v in todos if v not in retornados]);' ||
+    ' return " ".join(map(str, perdidos)) if perdidos else "*"',
     1);
 
 
