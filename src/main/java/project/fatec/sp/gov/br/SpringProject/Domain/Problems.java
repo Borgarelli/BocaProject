@@ -1,12 +1,12 @@
 package project.fatec.sp.gov.br.SpringProject.Domain;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -30,7 +30,7 @@ public class Problems {
     @Column(name = "output", nullable = false)
     private Long result;
 
-    // @OneToMany(mappedBy = "caseTests", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    // private List<CaseTests> caseTests;
+    @OneToMany(mappedBy = "problem", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<CaseTests> caseTests;
 
 }

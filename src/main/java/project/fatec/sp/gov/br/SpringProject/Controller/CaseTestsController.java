@@ -28,7 +28,7 @@ public class CaseTestsController {
         return service.findAllTests();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{caseTestId}")
     public CaseTests findById(@PathVariable("caseTestId") Long caseTestId) {
         return service.findById(caseTestId);
     }
@@ -43,7 +43,7 @@ public class CaseTestsController {
         return service.findByProblem(problemId);
     }
     
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("/{caseTestId}/delete")
     public void deleteById(@PathVariable("caseTestId") Long caseTestId) {
         service.deleteCaseTest(caseTestId);
     }
