@@ -47,13 +47,13 @@ public class SolutionService {
         repository.deleteById(id);
     }
 
-    public List<Solution> findByStatus() {
-        List<Solution> found = repository.findByStatus();
-        if(found.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return found;
-    }
+    // public List<Solution> findByStatus() {
+    //     List<Solution> found = repository.findByStatus();
+    //     if(found.isEmpty()) {
+    //         throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    //     }
+    //     return found;
+    // }
      
     public List<Solution> findByProblemCode(String problemCode) {
         List<Solution> found = repository.findByProblemCodeOrderByCreatedAt(problemCode);

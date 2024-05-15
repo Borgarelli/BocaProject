@@ -28,9 +28,9 @@ public class Problems {
     private String codeProblem;
 
     @Column(name = "output", nullable = false)
-    private Boolean result;
+    private Long result;
 
-    @OneToMany(mappedBy = "caseTests", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<CaseTests> caseTests;
+    // @OneToMany(mappedBy = "caseTests", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    // private List<CaseTests> caseTests;
 
 }
