@@ -37,9 +37,11 @@ CREATE TABLE IF NOT EXISTS solution (
 INSERT INTO problems (problem_name, code_problem, output)
 VALUES (
     'Mergulho',
-    'def voluntarios_perdidos(N, R, retornados): todos = set(range(1, N+1)); retornados = set(retornados); perdidos = todos - retornados; if perdidos: return " ".join(map(str, sorted(perdidos))); else: return "*"',
-    1
-);
+    'def voluntarios_perdidos(N, R, retornados): todos = set(range(1, N+1)); ' ||
+    'retornados = set(retornados); perdidos = todos - retornados;' ||
+    ' if perdidos: return " ".join(map(str, sorted(perdidos)));' ||
+    ' else: return "*"',
+    1);
 
 
 INSERT INTO test (result, code, problem_id) 
@@ -49,10 +51,20 @@ VALUES (
     1);
 
 
-INSERT INTO test (result, code, problem_id) VALUES (0, 'def voluntarios_perdidos(N, R, retornados): todos = set(range(1, N+1)); perdidos = sorted(list(todos - set(retornados))); return " ".join(map(str, perdidos)) if perdidos else "*"', 1);
+INSERT INTO test (result, code, problem_id)
+VALUES (0,
+        'def voluntarios_perdidos(N, R, retornados): todos = set(range(1, N+1));' ||
+        ' perdidos = sorted(list(todos - set(retornados)));' ||
+        ' return " ".join(map(str, perdidos)) if perdidos else "*"',
+        1);
 
 
-INSERT INTO test (result, code, problem_id) VALUES (0, 'def voluntarios_perdidos(N, R, retornados): todos = set(range(1, N+1)); retornados = set(retornados); perdidos = [v for v in todos if v not in retornados]; return " ".join(map(str, sorted(perdidos))) if perdidos else "*"', 1);
+INSERT INTO test (result, code, problem_id)
+VALUES (0,
+        'def voluntarios_perdidos(N, R, retornados): todos = set(range(1, N+1)); ' ||
+        'retornados = set(retornados); perdidos = [v for v in todos if v not in retornados]; ' ||
+        'return " ".join(map(str, sorted(perdidos))) if perdidos else "*"',
+        1);
 
 
 
