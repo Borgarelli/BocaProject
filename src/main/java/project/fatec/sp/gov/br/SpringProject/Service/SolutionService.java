@@ -47,12 +47,11 @@ public class SolutionService {
             Path tempFilePath = Files.createTempFile("uploaded-file", ".py");
             Files.copy(file.getInputStream(), tempFilePath, StandardCopyOption.REPLACE_EXISTING);
 
-            solution.setFileName(file.getOriginalFilename());
-
             Solution savedSolution = repository.save(solution);
             executePythonFile(savedSolution.getProblem().getIdProblem(), tempFilePath.toString());
             savedSolution.setStatus(Status.SUCCESS);
-            savedSolution.setAuthorName(file.getContentType());
+            savedSolution.setAuthorName(String.valueOf(file.getContentType().contains("authorname")));
+            savedSolution.setFileName(file.getOriginalFilename());
             savedSolution.setCreatedAt(LocalDateTime.now());
             return savedSolution;
         }

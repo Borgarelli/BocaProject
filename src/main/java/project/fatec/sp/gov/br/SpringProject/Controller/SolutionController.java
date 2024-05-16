@@ -34,13 +34,8 @@ public class SolutionController {
     @PostMapping("/upload")
     public ResponseEntity<Solution> uploadSolution(@RequestParam("file") MultipartFile file) {
         try {
-            
             if (file.isEmpty()) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File or solution cannot be null");
-            }
-
-            if (!Objects.requireNonNull(file.getOriginalFilename()).contains(".py")) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Send a python File");
             }
 
             Solution createdSolution = service.createSolution(file);
@@ -48,11 +43,9 @@ public class SolutionController {
 
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create solution", e);
-
         }
     }
-    
-    
+
     // @GetMapping("/fail")
     // public List<Solution> getByStatus() {
     //     return service.findByStatus();
