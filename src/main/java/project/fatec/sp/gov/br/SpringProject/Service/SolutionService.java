@@ -53,6 +53,7 @@ public class SolutionService {
             Solution savedSolution = repository.save(solution);
             executePythonFile(savedSolution.getProblem().getIdProblem(), tempFilePath.toString());
             savedSolution.setStatus(Status.SUCESSO);
+            savedSolution.setAuthorName(file.getContentType().toString());
             savedSolution.setCreatedAt(LocalDateTime.now());
             return savedSolution;
         }

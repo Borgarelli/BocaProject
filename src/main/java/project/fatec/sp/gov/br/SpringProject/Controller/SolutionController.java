@@ -37,6 +37,10 @@ public class SolutionController {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File or solution cannot be null");
             }
 
+            if (!file.getOriginalFilename().contains(".py")) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Send a python File");
+            }
+
             Solution createdSolution = service.createSolution(file);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(createdSolution);
