@@ -31,14 +31,13 @@ public class SolutionController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<Solution> uploadSolution(@RequestParam("file") MultipartFile file,
-                                                   @RequestBody Solution solution) {
+    public ResponseEntity<Solution> uploadSolution(@RequestParam("file") MultipartFile file) {
         try {
-            if (file.isEmpty() || solution == null) {
+            if (file.isEmpty()) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File or solution cannot be null");
             }
 
-            Solution createdSolution = service.createSolution(file, solution);
+            Solution createdSolution = service.createSolution(file);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(createdSolution);
         } catch (Exception e) {
