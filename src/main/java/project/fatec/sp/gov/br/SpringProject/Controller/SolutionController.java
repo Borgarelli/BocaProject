@@ -1,6 +1,7 @@
 package project.fatec.sp.gov.br.SpringProject.Controller;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +38,7 @@ public class SolutionController {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File or solution cannot be null");
             }
 
-            if (!file.getOriginalFilename().contains(".py")) {
+            if (!Objects.requireNonNull(file.getOriginalFilename()).contains(".py")) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Send a python File");
             }
 
