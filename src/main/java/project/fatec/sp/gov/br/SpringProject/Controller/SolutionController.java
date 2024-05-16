@@ -51,10 +51,10 @@ public class SolutionController {
     //     return service.findByStatus();
     // }
     
-    @GetMapping("/{problemCode}")
-    public List<Solution> getByProblemCode(@PathVariable("problemCode") String problemCode) {
-        return service.findByProblemCode(problemCode);
-    }
+    // @GetMapping("/{problemId}")
+    // public List<Solution> getByProblemId(@PathVariable("problemId") Long problemId) {
+    //     return service.findByProblemCode(problemId);
+    // }
     
     @DeleteMapping("/{id}/delete")
     public void deleteSolution(@PathVariable("id") Long id) {

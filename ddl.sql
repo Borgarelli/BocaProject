@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS solution (
     file_name TEXT NOT NULL,
     status TINYINT,
     problem_id BIGINT,
+    created_at TIMESTAMP,
     FOREIGN KEY (problem_id) REFERENCES problems (problem_id)
 );
 

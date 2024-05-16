@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -51,6 +52,7 @@ public class SolutionService {
             Solution savedSolution = repository.save(solution);
             executePythonFile(savedSolution.getProblem().getIdProblem(), tempFilePath.toString());
             savedSolution.setStatus(Status.SUCESSO);
+            savedSolution.setCreatedAt(LocalDateTime.now());
             return savedSolution;
         }
         catch (IOException e) {
@@ -119,11 +121,11 @@ public class SolutionService {
     //     return found;
     // }
      
-    public List<Solution> findByProblemCode(String problemCode) {
-        List<Solution> found = repository.findByProblemCodeOrderByCreatedAt(problemCode);
-        if(found.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return found;
-    }
+    // public List<Solution> findByProblemCode(Long problemId) {
+    //     List<Solution> found = repository.findByProblemIdOrderByCreatedAt(problemId);
+    //     if(found.isEmpty()) {
+    //         throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    //     }
+    //     return found;
+    // }
 }

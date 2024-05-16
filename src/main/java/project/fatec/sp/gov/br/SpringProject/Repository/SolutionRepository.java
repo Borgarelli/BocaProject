@@ -12,6 +12,5 @@ public interface SolutionRepository extends JpaRepository <Solution,Long>{
     // "WHERE s.status = Falso")
     // public List<Solution> findByStatus();
 
-    List<Solution> findByProblemCodeOrderByCreatedAt(String problemCode);
-
+    // List<Solution> findByProblemIdOrderByCreatedAt(Long problemId);
 }

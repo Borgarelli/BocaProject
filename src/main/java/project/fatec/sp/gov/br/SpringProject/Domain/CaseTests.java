@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import project.fatec.sp.gov.br.SpringProject.Enum.Status;
 
 @Getter
 @Setter
