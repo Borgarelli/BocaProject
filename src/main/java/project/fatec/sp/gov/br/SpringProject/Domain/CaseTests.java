@@ -23,7 +23,7 @@ public class CaseTests {
     private long idCaseTest;
 
     @Column(name = "result")
-    private Status result;
+    private String result;
 
     @Column(name = "params", nullable = false)
     private String params;

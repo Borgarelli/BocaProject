@@ -18,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import project.fatec.sp.gov.br.SpringProject.Domain.CaseTests;
 import project.fatec.sp.gov.br.SpringProject.Domain.Solution;
+import project.fatec.sp.gov.br.SpringProject.Enum.Status;
 import project.fatec.sp.gov.br.SpringProject.Repository.CaseTestsRepository;
 import project.fatec.sp.gov.br.SpringProject.Repository.SolutionRepository;
 
@@ -48,11 +49,13 @@ public class SolutionService {
             solution.setFileName(file.getOriginalFilename());
 
             Solution savedSolution = repository.save(solution);
-            executePythonFile(savedSolution.getId_solution(), tempFilePath.toString());
+            executePythonFile(savedSolution.getProblem().getIdProblem(), tempFilePath.toString());
+            savedSolution.setStatus(Status.SUCESSO);
             return savedSolution;
         }
         catch (IOException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+            solution.setStatus(Status.FALSO);
+            return repository.save(solution);
         }
     }
 
@@ -64,13 +67,13 @@ public class SolutionService {
         return found.get();
     }
 
-    public void executePythonFile(Long problemId, String pythonCode) {
+    private void executePythonFile(Long problemId, String pythonCode) {
         List<CaseTests> found = caseTestsRepository.findByIdProblem(problemId);
 
         for(CaseTests founded : found) {
             String pythonOutput = executePythonCode(pythonCode, problemId, founded.getParams());
 
-            if(!pythonOutput.trim().equals(founded.getResult().toString().trim())) {
+            if(!pythonOutput.trim().equals(founded.getResult().trim())) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fail test");
             }
         }
@@ -99,7 +102,6 @@ public class SolutionService {
         }
         return output.toString();
     }
-
 
     public List<Solution> findAll() {
         return repository.findAll();
