@@ -23,7 +23,6 @@ import project.fatec.sp.gov.br.SpringProject.Enum.Status;
 import project.fatec.sp.gov.br.SpringProject.Repository.CaseTestsRepository;
 import project.fatec.sp.gov.br.SpringProject.Repository.SolutionRepository;
 
-
 @Service
 public class SolutionService {
 
