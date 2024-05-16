@@ -34,6 +34,7 @@ public class SolutionController {
     @PostMapping("/upload")
     public ResponseEntity<Solution> uploadSolution(@RequestParam("file") MultipartFile file) {
         try {
+            
             if (file.isEmpty()) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File or solution cannot be null");
             }
@@ -43,12 +44,14 @@ public class SolutionController {
             }
 
             Solution createdSolution = service.createSolution(file);
-
             return ResponseEntity.status(HttpStatus.CREATED).body(createdSolution);
+
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create solution", e);
+
         }
     }
+    
     
     // @GetMapping("/fail")
     // public List<Solution> getByStatus() {
@@ -59,7 +62,7 @@ public class SolutionController {
     // public List<Solution> getByProblemId(@PathVariable("problemId") Long problemId) {
     //     return service.findByProblemCode(problemId);
     // }
-    
+
     @DeleteMapping("/{id}/delete")
     public void deleteSolution(@PathVariable("id") Long id) {
         service.deleteSolution(id);
