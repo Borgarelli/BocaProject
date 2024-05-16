@@ -19,8 +19,8 @@ CREATE TABLE IF NOT EXISTS problems (
 
 CREATE TABLE IF NOT EXISTS test (
     case_test_id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    result TINYINT,
-    code TEXT NOT NULL,
+    result TEXT NOT NULL,
+    params TEXT NOT NULL,
     problem_id BIGINT,
     FOREIGN KEY (problem_id) REFERENCES problems (problem_id)
 );

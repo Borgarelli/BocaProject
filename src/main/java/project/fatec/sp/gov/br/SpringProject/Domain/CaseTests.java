@@ -25,8 +25,8 @@ public class CaseTests {
     @Column(name = "result")
     private Status result;
 
-    @Column(name = "code", nullable = false)
-    private String code;
+    @Column(name = "params", nullable = false)
+    private String params;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn( name = "problem_id")
