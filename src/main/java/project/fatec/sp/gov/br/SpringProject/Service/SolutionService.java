@@ -36,7 +36,7 @@ public class SolutionService {
     public Solution createSolution(MultipartFile file) {
         Solution solution = new Solution();
 
-        if(file == null || solution == null) {
+        if(file == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
@@ -52,13 +52,13 @@ public class SolutionService {
 
             Solution savedSolution = repository.save(solution);
             executePythonFile(savedSolution.getProblem().getIdProblem(), tempFilePath.toString());
-            savedSolution.setStatus(Status.SUCESSO);
+            savedSolution.setStatus(Status.SUCCESS);
             savedSolution.setAuthorName(file.getContentType());
             savedSolution.setCreatedAt(LocalDateTime.now());
             return savedSolution;
         }
         catch (IOException e) {
-            solution.setStatus(Status.FALSO);
+            solution.setStatus(Status.FAIL);
             return repository.save(solution);
         }
     }
