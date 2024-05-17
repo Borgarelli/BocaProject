@@ -32,8 +32,7 @@ public class SolutionService {
     @Autowired
     private CaseTestsRepository caseTestsRepository;
 
-    public Solution createSolution(MultipartFile file) {
-        Solution solution = new Solution();
+    public Solution createSolution(MultipartFile file, Solution solution) {
 
         if(file == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
