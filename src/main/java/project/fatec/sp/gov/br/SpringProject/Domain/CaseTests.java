@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import project.fatec.sp.gov.br.SpringProject.Enum.Status;
 
 @Getter
 @Setter
@@ -23,10 +22,10 @@ public class CaseTests {
     private long idCaseTest;
 
     @Column(name = "result")
-    private Status result;
+    private String result;
 
-    @Column(name = "code", nullable = false)
-    private String code;
+    @Column(name = "params", nullable = false)
+    private String params;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn( name = "problem_id")

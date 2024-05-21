@@ -43,10 +43,9 @@ public class CaseTestsService {
     }
 
     public CaseTests createCaseTest(Long problemId, CaseTests caseTest) {
-
         Optional<Problems> found = problemsRepository.findById(problemId);
 
-        if (caseTest == null || caseTest.getCode().isBlank()) {
+        if (caseTest == null || caseTest.getParams().isBlank()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
@@ -57,7 +56,6 @@ public class CaseTestsService {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Problem not found");
         }
-        
     }
 
     public void deleteCaseTest(Long caseTestId) {

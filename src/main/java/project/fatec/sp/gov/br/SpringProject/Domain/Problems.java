@@ -33,4 +33,7 @@ public class Problems {
     @OneToMany(mappedBy = "problem", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<CaseTests> caseTests;
 
+    @OneToMany(mappedBy = "problem", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Solution> solution;
+
 }

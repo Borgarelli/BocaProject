@@ -3,17 +3,14 @@ package project.fatec.sp.gov.br.SpringProject.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 import project.fatec.sp.gov.br.SpringProject.Domain.Solution;
 import project.fatec.sp.gov.br.SpringProject.Service.SolutionService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/solution")
@@ -32,22 +29,32 @@ public class SolutionController {
     public Solution getById(@PathVariable("id") Long id) {
         return service.findById(id);
     }
-    
-    @PostMapping()
-    public Solution createSolution(@RequestBody Solution solution) {    
-        return service.createSolution(solution);
+
+    @PostMapping("/upload")
+    public ResponseEntity<Solution> uploadSolution(@RequestPart("file") MultipartFile file, @RequestPart("data") Solution solution) {
+        try {
+            if (file.isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File or solution cannot be null");
+            }
+
+            Solution createdSolution = service.createSolution(file, solution);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdSolution);
+
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create solution", e);
+        }
     }
-    
+
     // @GetMapping("/fail")
     // public List<Solution> getByStatus() {
     //     return service.findByStatus();
     // }
     
-    @GetMapping("/{problemCode}")
-    public List<Solution> getByProblemCode(@PathVariable("problemCode") String problemCode) {
-        return service.findByProblemCode(problemCode);
-    }
-    
+    // @GetMapping("/{problemId}")
+    // public List<Solution> getByProblemId(@PathVariable("problemId") Long problemId) {
+    //     return service.findByProblemCode(problemId);
+    // }
+
     @DeleteMapping("/{id}/delete")
     public void deleteSolution(@PathVariable("id") Long id) {
         service.deleteSolution(id);

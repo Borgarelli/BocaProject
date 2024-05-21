@@ -1,12 +1,9 @@
 package project.fatec.sp.gov.br.SpringProject.Domain;
 
 import java.time.LocalDateTime;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,8 +32,10 @@ public class Solution {
     @Column(name = "status")
     private Status status;
 
-    @Column(name = "problem_code")
-    private String problemCode;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn( name = "problem_id")
+    @JsonIgnore
+    private Problems problem;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;

@@ -5,8 +5,8 @@ import lombok.Getter;
 @Getter
 public enum Status {
     
-    SUCESSO("Sucesso"),
-    FALSO("Falso");
+    SUCCESS("Sucess"),
+    FAIL("Fail");
 
     private String status;
 
