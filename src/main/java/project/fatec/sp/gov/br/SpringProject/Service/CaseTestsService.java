@@ -30,8 +30,8 @@ public class CaseTestsService {
         return found.get();
     }
     
-    public List<CaseTests> findByProblem(Long problemId) {
-        List<CaseTests> results = repository.findByIdProblem(problemId);
+    public List<CaseTests> findByProblem(String problemCode) {
+        List<CaseTests> results = repository.findByCodeProblem(problemCode);
         if(results.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND); 
         }

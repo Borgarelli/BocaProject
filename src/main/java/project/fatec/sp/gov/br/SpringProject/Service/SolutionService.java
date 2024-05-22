@@ -45,16 +45,19 @@ public class SolutionService {
         try {
             Path tempFilePath = Files.createTempFile("uploaded-file", ".py");
             Files.copy(file.getInputStream(), tempFilePath, StandardCopyOption.REPLACE_EXISTING);
+            
+            solution.setFileName(file.getOriginalFilename());
 
             Solution savedSolution = repository.save(solution);
-            executePythonFile(savedSolution.getProblem().getIdProblem(), tempFilePath.toString());
+            executePythonFile(savedSolution.getProblem().getCodeProblem(), tempFilePath.toString());
             savedSolution.setStatus(Status.SUCCESS);
             savedSolution.setAuthorName(String.valueOf(file.getContentType().contains("authorname")));
-            savedSolution.setFileName(file.getOriginalFilename());
+            // savedSolution.setFileName(file.getOriginalFilename());
             savedSolution.setCreatedAt(LocalDateTime.now());
             return savedSolution;
         }
         catch (IOException e) {
+            
             solution.setStatus(Status.FAIL);
             return repository.save(solution);
         }
@@ -68,11 +71,11 @@ public class SolutionService {
         return found.get();
     }
 
-    private void executePythonFile(Long problemId, String pythonCode) {
-        List<CaseTests> found = caseTestsRepository.findByIdProblem(problemId);
+    private void executePythonFile(String problemCode, String pythonCode) {
+        List<CaseTests> found = caseTestsRepository.findByCodeProblem(problemCode);
 
         for(CaseTests founded : found) {
-            String pythonOutput = executePythonCode(pythonCode, problemId, founded.getParams());
+            String pythonOutput = executePythonCode(pythonCode, problemCode, founded.getParams());
 
             if(!pythonOutput.trim().equals(founded.getResult().trim())) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Fail test");
@@ -80,10 +83,10 @@ public class SolutionService {
         }
     }
 
-    private String executePythonCode(String pythonCodeFilePath, Long problemId, String input) {
+    private String executePythonCode(String pythonCodeFilePath, String problemCode, String input) {
         StringBuilder output = new StringBuilder();
         try {
-            String[] command = new String[]{"python3", pythonCodeFilePath, String.valueOf(problemId), input};
+            String[] command = new String[]{"python3", pythonCodeFilePath, String.valueOf(problemCode), input};
 
             Process process = Runtime.getRuntime().exec(command);
 

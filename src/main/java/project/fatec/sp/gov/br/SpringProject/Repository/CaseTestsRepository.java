@@ -10,7 +10,7 @@ public interface CaseTestsRepository extends JpaRepository<CaseTests, Long> {
 
     @Query("SELECT c FROM CaseTests c " +
             "LEFT JOIN c.problem p " +
-            "WHERE p.idProblem = :problemId ")
-    List<CaseTests> findByIdProblem(Long problemId);
+            "WHERE p.problem_code = :problemCode ")
+    List<CaseTests> findByCodeProblem(String problemCode);
 
 }

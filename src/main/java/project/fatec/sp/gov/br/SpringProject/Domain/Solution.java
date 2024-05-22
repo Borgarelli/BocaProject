@@ -33,11 +33,11 @@ public class Solution {
     private Status status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn( name = "problem_id")
+    @JoinColumn( name = "problem_code")
     @JsonIgnore
     private Problems problem;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
 }

@@ -39,8 +39,8 @@ public class CaseTestsController {
     }
     
     @GetMapping("/{problemId}/problem")
-    public List<CaseTests> getByProblemId (@PathVariable("problemId") Long problemId) {
-        return service.findByProblem(problemId);
+    public List<CaseTests> getByProblemId (@PathVariable("problemCode") String problemCode) {
+        return service.findByProblem(problemCode);
     }
     
     @DeleteMapping("/{caseTestId}/delete")

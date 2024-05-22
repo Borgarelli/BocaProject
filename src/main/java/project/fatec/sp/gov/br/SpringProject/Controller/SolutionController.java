@@ -41,6 +41,7 @@ public class SolutionController {
             return ResponseEntity.status(HttpStatus.CREATED).body(createdSolution);
 
         } catch (Exception e) {
+            e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create solution", e);
         }
     }

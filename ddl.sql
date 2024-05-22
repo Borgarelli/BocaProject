@@ -13,8 +13,7 @@ use spring;
 CREATE TABLE IF NOT EXISTS problems (
     problem_id BIGINT PRIMARY KEY AUTO_INCREMENT,
     problem_name TEXT,
-    code_problem TEXT NOT NULL,
-    output BIGINT NOT NULL
+    problem_code TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS test (
@@ -30,16 +29,14 @@ CREATE TABLE IF NOT EXISTS solution (
     author_name TEXT NOT NULL,
     file_name TEXT NOT NULL,
     status TINYINT,
-    problem_id BIGINT,
-    created_at TIMESTAMP,
-    FOREIGN KEY (problem_id) REFERENCES problems (problem_id)
+    problem_code VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP
 );
 
-INSERT INTO problems (problem_name, code_problem, output)
+INSERT INTO problems (problem_name, problem_code)
 VALUES (
     'Mergulho',
-    'def voluntarios_perdidos(N, R, retornados): todos = set(range(1, N+1)); retornados = set(retornados); perdidos = todos - retornados; if perdidos: return " ".join(map(str, sorted(perdidos))); else: return "*"',
-    1);
+    'A');
 
 INSERT INTO test (params, result, problem_id)
 VALUES ('5 5\n1 2 3 4 5', '1 2 3 4 5', 1);
