@@ -37,7 +37,7 @@ public class Solution {
     @JsonIgnore
     private Problems problem;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
 }

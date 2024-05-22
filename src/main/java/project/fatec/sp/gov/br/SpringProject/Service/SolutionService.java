@@ -18,9 +18,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import project.fatec.sp.gov.br.SpringProject.Domain.CaseTests;
+import project.fatec.sp.gov.br.SpringProject.Domain.Problems;
 import project.fatec.sp.gov.br.SpringProject.Domain.Solution;
 import project.fatec.sp.gov.br.SpringProject.Enum.Status;
 import project.fatec.sp.gov.br.SpringProject.Repository.CaseTestsRepository;
+import project.fatec.sp.gov.br.SpringProject.Repository.ProblemsRepository;
 import project.fatec.sp.gov.br.SpringProject.Repository.SolutionRepository;
 
 @Service
@@ -29,10 +31,13 @@ public class SolutionService {
    @Autowired
    private SolutionRepository repository;
 
+   @Autowired
+   private ProblemsRepository problemsRepository;
+
     @Autowired
     private CaseTestsRepository caseTestsRepository;
 
-    public Solution createSolution(MultipartFile file, Solution solution) {
+    public Solution createSolution(MultipartFile file, Solution solution, Long problemId) {
 
         if(file == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
@@ -41,16 +46,18 @@ public class SolutionService {
         if(!Objects.requireNonNull(file.getOriginalFilename()).endsWith(".py")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Send a python file only!");
         }
+        
 
         try {
             Path tempFilePath = Files.createTempFile("uploaded-file", ".py");
             Files.copy(file.getInputStream(), tempFilePath, StandardCopyOption.REPLACE_EXISTING);
 
+            solution.setProblem(problemsRepository.findById(problemId).get());
+            solution.setFileName(file.getOriginalFilename());
+
             Solution savedSolution = repository.save(solution);
             executePythonFile(savedSolution.getProblem().getIdProblem(), tempFilePath.toString());
             savedSolution.setStatus(Status.SUCCESS);
-            savedSolution.setAuthorName(String.valueOf(file.getContentType().contains("authorname")));
-            savedSolution.setFileName(file.getOriginalFilename());
             savedSolution.setCreatedAt(LocalDateTime.now());
             return savedSolution;
         }
