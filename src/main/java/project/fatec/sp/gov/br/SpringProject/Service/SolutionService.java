@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import project.fatec.sp.gov.br.SpringProject.Domain.CaseTests;
-import project.fatec.sp.gov.br.SpringProject.Domain.Problems;
 import project.fatec.sp.gov.br.SpringProject.Domain.Solution;
 import project.fatec.sp.gov.br.SpringProject.Enum.Status;
 import project.fatec.sp.gov.br.SpringProject.Repository.CaseTestsRepository;
@@ -47,7 +46,6 @@ public class SolutionService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Send a python file only!");
         }
         
-
         try {
             Path tempFilePath = Files.createTempFile("uploaded-file", ".py");
             Files.copy(file.getInputStream(), tempFilePath, StandardCopyOption.REPLACE_EXISTING);

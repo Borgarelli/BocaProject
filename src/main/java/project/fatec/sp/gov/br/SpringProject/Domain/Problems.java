@@ -27,9 +27,6 @@ public class Problems {
     @Column(name = "code_problem", nullable = false, unique = true)
     private String codeProblem;
 
-    @Column(name = "output", nullable = false)
-    private Long result;
-
     @OneToMany(mappedBy = "problem", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<CaseTests> caseTests;
 
