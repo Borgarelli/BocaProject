@@ -1,8 +1,10 @@
 package project.fatec.sp.gov.br.SpringProject.Service;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -88,18 +90,30 @@ public class SolutionService {
     private String executePythonCode(String pythonCodeFilePath, Long problemId, String input) {
         StringBuilder output = new StringBuilder();
         try {
-            String[] command = new String[]{"python3", pythonCodeFilePath, String.valueOf(problemId), input};
 
-            Process process = Runtime.getRuntime().exec(command);
-
+            String[] params = input.split("\n")[0].split(" ");
+            String retornados = input.split("\n")[1];
+    
+            String N = params[0];
+            String R = params[1];
+    
+            String[] command = new String[]{"python3", pythonCodeFilePath, N, R};
+    
+            ProcessBuilder processBuilder = new ProcessBuilder(command);
+            Process process = processBuilder.start();
+    
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
+            writer.write(retornados);
+            writer.close();
+    
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
             while ((line = reader.readLine()) != null) {
                 output.append(line).append("\n");
             }
-
+    
             int exitCode = process.waitFor();
-
+    
             if (exitCode != 0) {
                 throw new RuntimeException("Erro ao executar o código Python");
             }
@@ -108,6 +122,7 @@ public class SolutionService {
         }
         return output.toString();
     }
+    
 
     public List<Solution> findAll() {
         return repository.findAll();
