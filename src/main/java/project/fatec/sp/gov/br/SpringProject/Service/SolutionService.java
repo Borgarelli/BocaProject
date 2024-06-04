@@ -159,11 +159,11 @@ public class SolutionService {
     //     return found;
     // }
      
-    // public List<Solution> findByProblemCode(Long problemId) {
-    //     List<Solution> found = repository.findByProblemIdOrderByCreatedAt(problemId);
-    //     if(found.isEmpty()) {
-    //         throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-    //     }
-    //     return found;
-    // }
+    public List<Solution> findByProblemCode(Long problemId) {
+        List<Solution> found = repository.findByProblemId(problemId);
+        if(found.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return found;
+    }
 }
