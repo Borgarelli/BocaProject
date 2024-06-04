@@ -41,7 +41,7 @@ public class SolutionService {
 
     public Solution createSolution(MultipartFile file, Solution solution, Long problemId) {
         if (file == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File cannot be null");
         }
     
         if (!Objects.requireNonNull(file.getOriginalFilename()).endsWith(".py")) {
