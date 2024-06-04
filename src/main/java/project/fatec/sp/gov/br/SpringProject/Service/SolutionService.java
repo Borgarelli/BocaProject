@@ -84,35 +84,40 @@ public class SolutionService {
     private String executePythonCode(String pythonCodeFilePath, String input) {
         StringBuilder output = new StringBuilder();
         try {
-            // Split the input into parts
-            String[] parts = input.split("\\s+");
-            
-            // Extract N and R from the input
-            String N = parts[0];
-            String R = parts[1];
-            
-            // Determine the format of the input and extract `retornados`
-            String retornados;
-            if (input.contains("\n")) {
-                // Format 'N R\nretornados'
-                retornados = input.split("\n")[1].trim();
-            } else {
-                // Format 'N R retornados'
-                retornados = String.join(" ", Arrays.copyOfRange(parts, 2, parts.length));
-            }
+
+            boolean hasNewline = input.contains("\n");
     
-            // Construct the command
-            String[] command = new String[]{"python3", pythonCodeFilePath, N, R};
+            String[] parts = input.split("\\s+");
+    
+            String[] command;
+            String stdInput = "";
+    
+            if (hasNewline) {
+
+                String[] lines = input.split("\n");
+                String[] params = lines[0].split(" ");
+                stdInput = lines[1].trim();
+    
+                command = new String[]{"python3", pythonCodeFilePath, params[0], params[1]};
+            } else if (parts.length > 3) {
+
+                command = new String[]{"python3", pythonCodeFilePath, parts[0], parts[1]};
+                stdInput = String.join(" ", Arrays.copyOfRange(parts, 2, parts.length));
+            } else {
+
+                command = new String[]{"python3", pythonCodeFilePath, parts[0], parts[1], parts[2]};
+            }
     
             ProcessBuilder processBuilder = new ProcessBuilder(command);
             Process process = processBuilder.start();
     
-            // Pass the returned values to the Python process
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
-            writer.write(retornados);
-            writer.close();
+            if (!stdInput.isEmpty()) {
+
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
+                writer.write(stdInput);
+                writer.close();
+            }
     
-            // Capture the output of the Python process
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
             while ((line = reader.readLine()) != null) {
@@ -128,7 +133,6 @@ public class SolutionService {
         }
         return output.toString();
     }
-    
     
     public Solution findById(Long id) {
         Optional<Solution> found = repository.findById(id);
