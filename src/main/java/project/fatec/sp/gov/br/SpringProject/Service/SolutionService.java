@@ -36,8 +36,8 @@ public class SolutionService {
    @Autowired
    private ProblemsRepository problemsRepository;
 
-    @Autowired
-    private CaseTestsRepository caseTestsRepository;
+   @Autowired
+   private CaseTestsRepository caseTestsRepository;
 
     public Solution createSolution(MultipartFile file, Solution solution, Long problemId) {
         if (file == null) {

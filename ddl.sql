@@ -51,11 +51,11 @@ INSERT INTO test (params, result, problem_id)
 VALUES ('7 5 1 3 5 6 7', '2 4 8 9 10 11 12', 1);
 
 INSERT INTO test (params, result, problem_id)
-VALUES ('1 1 0', 'C', 2);
+VALUES ('1 1 0', 'B', 2);
 
 INSERT INTO test (params, result, problem_id)
-VALUES ('0 0 0', '*', 2);
+VALUES ('0 0 0', 'A', 2);
 
-INSERT INTO test (params, result, problem_id) 
-VALUES ('1 0 0', 'A', 2);
+-- INSERT INTO test (params, result, problem_id) 
+-- VALUES ('1 0 0', 'A', 2);
 

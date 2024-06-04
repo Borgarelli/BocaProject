@@ -33,8 +33,8 @@ public class CaseTestsController {
         return service.findById(caseTestId);
     }
     
-    @PostMapping
-    public CaseTests createCaseTest(@PathVariable Long problemId ,@RequestBody CaseTests caseTest) {
+    @PostMapping("/{problemId}")
+    public CaseTests createCaseTest(@PathVariable ("problemId") Long problemId, @RequestBody CaseTests caseTest) {
         return service.createCaseTest(problemId, caseTest);
     }
     
