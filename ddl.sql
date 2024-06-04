@@ -43,4 +43,4 @@ INSERT INTO test (params, result, problem_id)
 VALUES ('5 5\n1 2 3 4 5', '6 7 8 9 10', 1);
 
 INSERT INTO test (params, result, problem_id)
-VALUES ('7 5\n1 3 5 6 7', '2 4 6 7', 1);
+VALUES ('7 5\n1 3 5 6 7', '2 4 8 9 10 11 12', 1);

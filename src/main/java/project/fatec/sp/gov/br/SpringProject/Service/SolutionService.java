@@ -60,6 +60,7 @@ public class SolutionService {
             savedSolution.setStatus(success ? Status.SUCCESS : Status.FAIL);
             savedSolution.setCreatedAt(LocalDateTime.now());
             return repository.save(savedSolution);
+
         } catch (IOException e) {
             solution.setStatus(Status.FAIL);
             return repository.save(solution);
@@ -73,34 +74,31 @@ public class SolutionService {
             String pythonOutput = executePythonCode(pythonCodeFilePath, founded.getParams());
     
             if (pythonOutput.trim().equals(founded.getResult().trim())) {
-                return true;  // Return success on the first matching test
+                return true;  
             }
         }
-        return false;  // Return failure if no test matches
+        return false; 
     }
     
     private String executePythonCode(String pythonCodeFilePath, String input) {
         StringBuilder output = new StringBuilder();
         try {
-            // Split the input into parameters and returned values
+
             String[] lines = input.split("\n");
             String[] params = lines[0].split(" ");
             String N = params[0];
             String R = params[1];
             String retornados = lines[1];
     
-            // Construct the command
             String[] command = new String[]{"python3", pythonCodeFilePath, N, R};
     
             ProcessBuilder processBuilder = new ProcessBuilder(command);
             Process process = processBuilder.start();
     
-            // Pass the returned values to the Python process
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
             writer.write(retornados);
             writer.close();
     
-            // Capture the output of the Python process
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
             while ((line = reader.readLine()) != null) {
