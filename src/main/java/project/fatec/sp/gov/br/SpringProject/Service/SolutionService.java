@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -83,22 +84,35 @@ public class SolutionService {
     private String executePythonCode(String pythonCodeFilePath, String input) {
         StringBuilder output = new StringBuilder();
         try {
-
-            String[] lines = input.split("\n");
-            String[] params = lines[0].split(" ");
-            String N = params[0];
-            String R = params[1];
-            String retornados = lines[1];
+            // Split the input into parts
+            String[] parts = input.split("\\s+");
+            
+            // Extract N and R from the input
+            String N = parts[0];
+            String R = parts[1];
+            
+            // Determine the format of the input and extract `retornados`
+            String retornados;
+            if (input.contains("\n")) {
+                // Format 'N R\nretornados'
+                retornados = input.split("\n")[1].trim();
+            } else {
+                // Format 'N R retornados'
+                retornados = String.join(" ", Arrays.copyOfRange(parts, 2, parts.length));
+            }
     
+            // Construct the command
             String[] command = new String[]{"python3", pythonCodeFilePath, N, R};
     
             ProcessBuilder processBuilder = new ProcessBuilder(command);
             Process process = processBuilder.start();
     
+            // Pass the returned values to the Python process
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
             writer.write(retornados);
             writer.close();
     
+            // Capture the output of the Python process
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
             while ((line = reader.readLine()) != null) {
@@ -114,6 +128,7 @@ public class SolutionService {
         }
         return output.toString();
     }
+    
     
     public Solution findById(Long id) {
         Optional<Solution> found = repository.findById(id);
