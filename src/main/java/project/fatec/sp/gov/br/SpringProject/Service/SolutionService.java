@@ -162,7 +162,7 @@ public class SolutionService {
     public List<Solution> findByProblemCode(Long problemId) {
         List<Solution> found = repository.findByProblemId(problemId);
         if(found.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Problem not register");
         }
         return found;
     }
