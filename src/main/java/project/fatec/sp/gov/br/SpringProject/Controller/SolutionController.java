@@ -30,17 +30,18 @@ public class SolutionController {
         return service.findById(id);
     }
 
-    @PostMapping("/upload")
-    public ResponseEntity<Solution> uploadSolution(@RequestPart("file") MultipartFile file, @RequestPart("data") Solution solution) {
+    @PostMapping("/upload/{problemId}")
+    public ResponseEntity<Solution> uploadSolution(@RequestPart("file") MultipartFile file, @RequestPart("data") Solution solution, @PathVariable("problemId") Long problemId) {
         try {
             if (file.isEmpty()) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File or solution cannot be null");
             }
 
-            Solution createdSolution = service.createSolution(file, solution);
+            Solution createdSolution = service.createSolution(file, solution, problemId);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdSolution);
 
         } catch (Exception e) {
+            e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create solution", e);
         }
     }
