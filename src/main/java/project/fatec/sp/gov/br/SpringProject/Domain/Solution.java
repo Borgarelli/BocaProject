@@ -30,6 +30,7 @@ public class Solution {
     private String fileName;
 
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @ManyToOne(fetch = FetchType.LAZY)
