@@ -56,6 +56,4 @@ VALUES ('1 1 0', 'B', 2);
 INSERT INTO test (params, result, problem_id)
 VALUES ('0 0 0', 'A', 2);
 
--- INSERT INTO test (params, result, problem_id) 
--- VALUES ('1 0 0', 'A', 2);
 
