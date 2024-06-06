@@ -159,11 +159,11 @@ public class SolutionService {
     //     return found;
     // }
      
-    // public List<Solution> findByProblemCode(Long problemId) {
-    //     List<Solution> found = repository.findByProblemId(problemId);
-    //     if(found.isEmpty()) {
-    //         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Problem not register");
-    //     }
-    //     return found;
-    // }
+     public List<Solution> findByProblemId(Long problemId) {
+         List<Solution> found = repository.findByIdProblem(problemId);
+         if(found.isEmpty()) {
+             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Problem not register");
+         }
+         return found;
+     }
 }
