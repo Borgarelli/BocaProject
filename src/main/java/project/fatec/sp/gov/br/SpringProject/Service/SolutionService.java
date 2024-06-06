@@ -151,13 +151,13 @@ public class SolutionService {
         repository.deleteById(id);
     }
 
-    // public List<Solution> findByStatus() {
-    //     List<Solution> found = repository.findByStatus();
-    //     if(found.isEmpty()) {
-    //         throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-    //     }
-    //     return found;
-    // }
+     public List<Solution> findByStatus(Status status) {
+         List<Solution> found = repository.findAllByStatus(status);
+         if(found.isEmpty()) {
+             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+         }
+         return found;
+     }
      
      public List<Solution> findByProblemId(Long problemId) {
          List<Solution> found = repository.findByIdProblem(problemId);

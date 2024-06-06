@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import project.fatec.sp.gov.br.SpringProject.Domain.Solution;
+import project.fatec.sp.gov.br.SpringProject.Enum.Status;
 import project.fatec.sp.gov.br.SpringProject.Service.SolutionService;
 
 @RestController
@@ -41,15 +42,14 @@ public class SolutionController {
             return ResponseEntity.status(HttpStatus.CREATED).body(createdSolution);
 
         } catch (Exception e) {
-            e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create solution", e);
         }
     }
 
-    // @GetMapping("/fail")
-    // public List<Solution> getByStatus() {
-    //     return service.findByStatus();
-    // }
+     @GetMapping("/{status}")
+     public List<Solution> getByStatus(@PathVariable("status") Status status) {
+         return service.findByStatus(status);
+     }
     
      @GetMapping("/{problemId}/problems")
      public List<Solution> getByProblemId(@PathVariable("problemId") Long problemId) {
@@ -60,4 +60,5 @@ public class SolutionController {
     public void deleteSolution(@PathVariable("id") Long id) {
         service.deleteSolution(id);
     }
+
 }
