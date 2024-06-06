@@ -17,6 +17,4 @@ public interface SolutionRepository extends JpaRepository <Solution,Long>{
             "ORDER BY s.createdAt ")
     List<Solution> findByIdProblem(Long problemId);
 
-    List<Solution> findAllByStatus(@Param("status") Status status);
-
 }

@@ -45,11 +45,6 @@ public class SolutionController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create solution", e);
         }
     }
-
-     @GetMapping("/{status}")
-     public List<Solution> getByStatus(@PathVariable("status") Status status) {
-         return service.findByStatus(status);
-     }
     
      @GetMapping("/{problemId}/problems")
      public List<Solution> getByProblemId(@PathVariable("problemId") Long problemId) {

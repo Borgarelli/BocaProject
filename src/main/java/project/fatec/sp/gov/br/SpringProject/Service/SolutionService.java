@@ -150,14 +150,6 @@ public class SolutionService {
     public void deleteSolution(Long id) {
         repository.deleteById(id);
     }
-
-     public List<Solution> findByStatus(Status status) {
-         List<Solution> found = repository.findAllByStatus(status);
-         if(found.isEmpty()) {
-             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-         }
-         return found;
-     }
      
      public List<Solution> findByProblemId(Long problemId) {
          List<Solution> found = repository.findByIdProblem(problemId);
