@@ -42,7 +42,7 @@ public class CaseTestsController {
         return service.findByProblem(problemId);
     }
     
-    @DeleteMapping("/{caseTestId}/")
+    @DeleteMapping("/{caseTestId}")
     public void deleteById(@PathVariable("caseTestId") Long caseTestId) {
         service.deleteCaseTest(caseTestId);
     }

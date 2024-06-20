@@ -50,7 +50,7 @@ public class SolutionController {
          return service.findByProblemId(problemId);
      }
 
-    @DeleteMapping("/{id}/")
+    @DeleteMapping("/{id}")
     public void deleteSolution(@PathVariable("id") Long id) {
         service.deleteSolution(id);
     }
