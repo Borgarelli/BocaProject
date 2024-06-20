@@ -30,7 +30,7 @@ public class ProblemController {
         return service.newProblems(problem);
     }
     
-    @DeleteMapping("/{problemId}/delete")
+    @DeleteMapping("/{problemId}")
     public void deleteProblem(@PathVariable("problemId") Long problemId) {
         service.deleteProblem(problemId);
     }
