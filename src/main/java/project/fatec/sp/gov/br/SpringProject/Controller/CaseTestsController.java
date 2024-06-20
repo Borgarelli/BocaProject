@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import project.fatec.sp.gov.br.SpringProject.Domain.CaseTests;
 import project.fatec.sp.gov.br.SpringProject.Service.CaseTestsService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +42,7 @@ public class CaseTestsController {
         return service.findByProblem(problemId);
     }
     
-    @DeleteMapping("/{caseTestId}/delete")
+    @DeleteMapping("/{caseTestId}")
     public void deleteById(@PathVariable("caseTestId") Long caseTestId) {
         service.deleteCaseTest(caseTestId);
     }

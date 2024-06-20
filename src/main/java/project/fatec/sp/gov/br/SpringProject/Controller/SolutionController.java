@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import project.fatec.sp.gov.br.SpringProject.Domain.Solution;
-import project.fatec.sp.gov.br.SpringProject.Enum.Status;
 import project.fatec.sp.gov.br.SpringProject.Service.SolutionService;
 
 @RestController
@@ -51,7 +50,7 @@ public class SolutionController {
          return service.findByProblemId(problemId);
      }
 
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("/{id}")
     public void deleteSolution(@PathVariable("id") Long id) {
         service.deleteSolution(id);
     }

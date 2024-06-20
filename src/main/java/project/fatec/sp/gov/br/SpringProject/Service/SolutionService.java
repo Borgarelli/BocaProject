@@ -39,109 +39,104 @@ public class SolutionService {
    @Autowired
    private CaseTestsRepository caseTestsRepository;
 
-    public Solution createSolution(MultipartFile file, Solution solution, Long problemId) {
-        if (file == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File cannot be null");
-        }
-    
-        if (!Objects.requireNonNull(file.getOriginalFilename()).endsWith(".py")) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Send a python file only!");
-        }
-    
-        try {
-            Path tempFilePath = Files.createTempFile("uploaded-file", ".py");
-            Files.copy(file.getInputStream(), tempFilePath, StandardCopyOption.REPLACE_EXISTING);
-    
-            solution.setProblem(problemsRepository.findById(problemId).get());
-            solution.setFileName(file.getOriginalFilename());
-    
-            Solution savedSolution = repository.save(solution);
-            boolean success = executePythonFile(savedSolution.getProblem().getIdProblem(), tempFilePath.toString());
-    
-            savedSolution.setStatus(success ? Status.SUCCESS : Status.FAIL);
-            savedSolution.setCreatedAt(LocalDateTime.now());
-            return repository.save(savedSolution);
+   public Solution createSolution(MultipartFile file, Solution solution, Long problemId) {
+    if (file == null) {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File cannot be null");
+    }
 
-        } catch (IOException e) {
-            solution.setStatus(Status.FAIL);
-            return repository.save(solution);
+    if (!Objects.requireNonNull(file.getOriginalFilename()).endsWith(".py")) {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Send a python file only!");
+    }
+
+    try {
+        Path tempFilePath = Files.createTempFile("uploaded-file", ".py");
+        Files.copy(file.getInputStream(), tempFilePath, StandardCopyOption.REPLACE_EXISTING);
+
+        solution.setProblem(problemsRepository.findById(problemId).get());
+        solution.setFileName(file.getOriginalFilename());
+
+        Solution savedSolution = repository.save(solution);
+        boolean success = executePythonFile(savedSolution.getProblem().getIdProblem(), tempFilePath.toString());
+
+        savedSolution.setStatus(success ? Status.SUCCESS : Status.FAIL);
+        savedSolution.setCreatedAt(LocalDateTime.now());
+        return repository.save(savedSolution);
+
+    } catch (IOException e) {
+        solution.setStatus(Status.FAIL);
+        return repository.save(solution);
+    }
+}
+
+private boolean executePythonFile(Long problemId, String pythonCodeFilePath) {
+    List<CaseTests> found = caseTestsRepository.findByIdProblem(problemId);
+
+    for (CaseTests founded : found) {
+        String pythonOutput = executePythonCode(pythonCodeFilePath, founded.getParams());
+
+        if (!pythonOutput.trim().equals(founded.getResult().trim())) {
+            return false; 
         }
     }
-    
-    private boolean executePythonFile(Long problemId, String pythonCodeFilePath) {
-        List<CaseTests> found = caseTestsRepository.findByIdProblem(problemId);
-    
-        for (CaseTests founded : found) {
-            String pythonOutput = executePythonCode(pythonCodeFilePath, founded.getParams());
-    
-            if (pythonOutput.trim().equals(founded.getResult().trim())) {
-                return true;  
-            }
-        }
-        return false; 
-    }
-    
-    private String executePythonCode(String pythonCodeFilePath, String input) {
-        StringBuilder output = new StringBuilder();
-        try {
+    return true;
+}
 
-            boolean hasNewline = input.contains("\n");
-    
-            String[] parts = input.split("\\s+");
-    
-            String[] command;
-            String stdInput = "";
-    
-            if (hasNewline) {
+private String executePythonCode(String pythonCodeFilePath, String input) {
+    StringBuilder output = new StringBuilder();
+    try {
+        boolean hasNewline = input.contains("\n");
 
-                String[] lines = input.split("\n");
-                String[] params = lines[0].split(" ");
-                stdInput = lines[1].trim();
-    
-                command = new String[]{"python3", pythonCodeFilePath, params[0], params[1]};
-            } else if (parts.length > 3) {
+        String[] parts = input.split("\\s+");
 
-                command = new String[]{"python3", pythonCodeFilePath, parts[0], parts[1]};
-                stdInput = String.join(" ", Arrays.copyOfRange(parts, 2, parts.length));
-            } else {
+        String[] command;
+        String stdInput = "";
 
-                command = new String[]{"python3", pythonCodeFilePath, parts[0], parts[1], parts[2]};
-            }
-    
-            ProcessBuilder processBuilder = new ProcessBuilder(command);
-            Process process = processBuilder.start();
-    
-            if (!stdInput.isEmpty()) {
+        if (hasNewline) {
+            String[] lines = input.split("\n");
+            String[] params = lines[0].split(" ");
+            stdInput = lines[1].trim();
 
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
-                writer.write(stdInput);
-                writer.close();
-            }
-    
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                output.append(line).append("\n");
-            }
-    
-            int exitCode = process.waitFor();
-            if (exitCode != 0) {
-                throw new RuntimeException("Erro ao executar o código Python");
-            }
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException("Erro ao executar o código Python: " + e.getMessage());
-        }
-        return output.toString();
-    }
-    
-    public Solution findById(Long id) {
-        Optional<Solution> found = repository.findById(id);
-        if(found.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            command = new String[]{"python3", pythonCodeFilePath, params[0], params[1]};
+        } else if (parts.length > 3) {
+            command = new String[]{"python3", pythonCodeFilePath, parts[0], parts[1]};
+            stdInput = String.join(" ", Arrays.copyOfRange(parts, 2, parts.length));
+        } else {
+            command = new String[]{"python3", pythonCodeFilePath, parts[0], parts[1], parts[2]};
         }
 
-        return found.get();
+        ProcessBuilder processBuilder = new ProcessBuilder(command);
+        Process process = processBuilder.start();
+
+        if (!stdInput.isEmpty()) {
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
+            writer.write(stdInput);
+            writer.close();
+        }
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            output.append(line).append("\n");
+        }
+
+        int exitCode = process.waitFor();
+        if (exitCode != 0) {
+            throw new RuntimeException("Erro ao executar o código Python");
+        }
+    } catch (IOException | InterruptedException e) {
+        throw new RuntimeException("Erro ao executar o código Python: " + e.getMessage());
     }
+    return output.toString();
+}
+
+public Solution findById(Long id) {
+    Optional<Solution> found = repository.findById(id);
+    if(found.isEmpty()) {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    }
+
+    return found.get();
+}
 
     public List<Solution> findAll() {
         return repository.findAll();
