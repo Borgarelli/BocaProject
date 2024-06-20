@@ -75,10 +75,10 @@ private boolean executePythonFile(Long problemId, String pythonCodeFilePath) {
         String pythonOutput = executePythonCode(pythonCodeFilePath, founded.getParams());
 
         if (!pythonOutput.trim().equals(founded.getResult().trim())) {
-            return false;  // Retorna false ao encontrar a primeira falha
+            return false; 
         }
     }
-    return true;  // Retorna true apenas se todos os casos de teste passarem
+    return true;
 }
 
 private String executePythonCode(String pythonCodeFilePath, String input) {
