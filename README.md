@@ -1,9 +1,9 @@
 # Introduction 
-Welcome to my project, a robust boca instance system built on Spring Boot 3 and powered by Docker containerization. Our project addresses the critical needs of managing computer assets, tracking components, and overseeing employee interactions efficiently.
+Welcome to my project, a robust boca instance system built on Spring Boot 3 and powered by Docker containerization.
 
 # Getting Started
 
-Welcome to the Inventory Management System powered by Spring Boot 3 and Docker. This guide will walk you through the steps to set up and run the application efficiently.
+Welcome to the Boca integration System powered by Spring Boot 3 and Docker. This guide will walk you through the steps to set up and run the application efficiently.
 
 Prerequisites
 
