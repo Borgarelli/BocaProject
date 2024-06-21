@@ -48,7 +48,8 @@ mvn clean test
 
 # Postman Collections for testing Project
 You can download the Postman Collections here
-[Boca Rest Api.postman_collection.json](https://github.com/user-attachments/files/15921232/Boca.Rest.Api.postman_collection.json)
+[Boca Rest Api.postman_collection.json](https://github.com/user-attachments/files/15932032/Boca.Rest.Api.postman_collection.json)
+
 
 ## Important!
 Is necessary change the file you be sending on Solution Endpoint Post, to a local mergulho.py or zerinhoouum.py on main of Boca Project.
