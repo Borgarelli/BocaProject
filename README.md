@@ -23,7 +23,7 @@ To run the application within a Docker container, you must have Docker installed
 ### Clone the Repository
 
 ```kotlin
-git clone https://github.com/Borgarelli/Project-Inventory.git
+git clone https://github.com/Borgarelli/BocaProject.git
 ```
 
 ### Build the Docker-Compose on Terminal:
