@@ -18,6 +18,11 @@ Maven is used for building and managing the project. You can download it from th
 ### Docker: 
 To run the application within a Docker container, you must have Docker installed. You can download Docker for your specific platform from the Docker website.
 
+# The ERD of Application
+
+<img src="https://github.com/Borgarelli/BocaProject/assets/79945984/db13cff7-b4f1-49a5-a33a-3ffe6ddb6435">
+
+
 # Build and Test
 
 ### Clone the Repository
