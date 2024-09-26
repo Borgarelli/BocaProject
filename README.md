@@ -51,6 +51,13 @@ mvn spring-boot:run
 mvn clean test
 ```
 
+# To Use on Gitpod
+
+### Up the database
+```kotlin
+mysql < ddl.sql
+```
+
 # Postman Collections for testing Project
 You can download the Postman Collections here
 [Boca Rest Api.postman_collection.json](https://github.com/user-attachments/files/15932032/Boca.Rest.Api.postman_collection.json)
